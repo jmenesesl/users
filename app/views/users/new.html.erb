@@ -1,0 +1,31 @@
+<h1>Add new User</h1>
+
+<%= form_tag :action => 'create' do %>
+<p><label for = "id_permalink">permalink</label>:
+
+<%= text_field 'users', 'id_permalink' %></p>
+
+<p><label for = "email">Email</label>:
+
+<%= text_field 'users', 'email' %></p>
+
+<p><label for = "usertype">Usertype</label>:
+
+<%= text_field 'users', 'usertype' %></p>
+
+<p><label for = "creations">Creations</label>:
+
+<%= text_field 'users', 'creations' %></p>
+
+<p><label for = "credit_subscription">Credit/subscription</label>:
+
+<%= text_field 'users', 'credit_subscription' %></p>
+
+<p><label for = "creation_date">date of creation</label>:
+
+<%= text_field 'users', 'creation_date' %></p>
+
+<%= submit_tag "Create" %>
+
+<% end -%>
+<%= link_to 'Back', {:action => 'list'} %>

@@ -1,0 +1,54 @@
+<% if @users.blank? %>
+<p>There are not any users currently in the system.</p>
+<% else %>
+<% end %>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/js/jquery.dataTables.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/js/dataTables.bootstrap.min.js"></script> -->
+
+
+<!-- <form id="live-search-form" method="get" action="search_by_email_or_permalink">
+  <input id="big-search-box" name="q" type="text"/>
+
+</form> -->
+
+<div id="live-search-results"></div>
+
+
+<div class="container">
+
+  <div>
+    <div class="d-flex">
+      <div class="col-sm-4">
+        <%= form_tag({:action => "search"}, :method => "get", id: "form_dropdown") do%>
+          <%#= label_tag(:usertype, "usertype:") %>
+          <%= select_tag :usertype, options_for_select(['All','Standard', 'Pro', 'Custom']), :include_blank => "Please select...", :class => "form-control" %>
+        <% end %>
+      </div>
+      <div class="col-sm-4"></div>
+
+      <div class="col-sm-4 text-right">
+        <%= form_tag({:action => "search_by_email_or_permalink"}, :method => "get", :class => 'form-inline', id: "form_search") do %>
+          <%= text_field_tag :term, '', placeholder:"Permalink or Email", id:'buscador' %>
+            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div>
+
+    <div class="container">
+    	<div class="row" id="table_div">
+    		<div class="span5" id="users">
+                <%= render 'user' %>
+                </div>
+                <div>
+                  <div class="text-center" id='paginacion'><%#= will_paginate @users, :params => { :action => 'list' }%></div>
+                </div>
+    	</div>
+    </div>
+  </div>
+
+</div>
+<!-- <button id="refresh_table">refresh</button> -->
+<p><%= link_to "Add new User", {:action => 'new' }%></p>

@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id_permalink: MyString
+  email: MyString
+  usertype: MyString
+  creations: MyString
+  credit_subscription: MyString
+  creation_date: 2018-10-16 12:17:22
+
+two:
+  id_permalink: MyString
+  email: MyString
+  usertype: MyString
+  creations: MyString
+  credit_subscription: MyString
+  creation_date: 2018-10-16 12:17:22
