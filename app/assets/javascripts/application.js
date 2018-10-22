@@ -17,6 +17,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap-sprockets
+//= require pagy
+window.addEventListener("turbolinks:load", Pagy.init);
 $(document).ready(function() {
 
   // $("body").change(function (e) {

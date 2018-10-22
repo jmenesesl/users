@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-$pages = 5
+$pages = 10
 
 def index
     @pagy, @users = pagy(User.all, items: $pages)

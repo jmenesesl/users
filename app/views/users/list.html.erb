@@ -2,6 +2,23 @@
 <p>There are not any users currently in the system.</p>
 <% else %>
 <% end %>
+<script>
+window.addEventListener("turbolinks:load", Pagy.init);
+$(document).ready(function() {
+  $("#form_search input").on('keydown', function (e) {
+    if ( e.which == 13 ) return false;
+  });
+    $("#form_search input").on('keyup', function (e) {
+      var wordFind = $("#search input").value;
+      $.get($("#form_search").attr("action"), $("#form_search").serialize(), null, "script");
+      // return false;
+    });
+    $("#form_dropdown select").on('change', function (e) {
+      $.get($("#form_dropdown").attr("action"), $("#form_dropdown").serialize(), null, "script");
+      return false;
+    });
+});
+</script>
 
 <div class="container">
 
@@ -31,9 +48,8 @@
     		<div class="span5" id="users">
                 <%= render 'user' %>
                 </div>
-                <div>
-                  <div class="text-center" id='paginacion'><%#= will_paginate @users, :params => { :action => 'list' }%></div>
-                </div>
+              <div>
+            </div>
     	</div>
     </div>
   </div>

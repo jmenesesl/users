@@ -19,7 +19,7 @@
         <td><%= users.creations %></td>
         <td><%= users.credit_subscription %></td>
         <td><%= users.creation_date %></td>
-        <td><i class="glyphicon glyphicon-calendar"></i>  <i class="glyphicon glyphicon-piggy-bank"></i>  <i class="glyphicon glyphicon-user"></i>  <i class="glyphicon glyphicon-remove-circle"></i></td>
+        <td><button type="button" class="btn btn-default btn-circle"><i class="glyphicon glyphicon-calendar"></i></button><button type="button" class="btn btn-default btn-circle"><i class="glyphicon glyphicon-piggy-bank"></i></button><button type="button" class="btn btn-default btn-circle"><i class="glyphicon glyphicon-user"></i></button><button type="button" class="btn btn-default btn-circle">  <i class="glyphicon glyphicon-remove-circle"></i></button></td>
     </tr>
     <%= puts "Usuarios" %>
     <%= puts users.id_permalink %>
@@ -32,4 +32,4 @@
     <%end %>
   </tbody>
 </table>
-<%== pagy_nav(@pagy).html_safe %>
+<div class="text-center" id='paginacion'><%== pagy_nav_bootstrap(@pagy).html_safe %></div>
