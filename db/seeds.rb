@@ -12,7 +12,7 @@ include Faker
   User.create(
     id_permalink: Faker::Number.number(5),
     email: Faker::Internet.email,
-    usertype: 'Pro',
+    usertype: 'Standard',
     creations: Faker::Company.name,
     credit_subscription: Faker::Number.number(3),
     creation_date: Faker::Date

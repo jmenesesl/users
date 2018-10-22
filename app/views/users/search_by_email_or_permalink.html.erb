@@ -2,17 +2,24 @@
 <p>There are not any users currently in the system.</p>
 <% else %>
 <% end %>
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/js/jquery.dataTables.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.12/js/dataTables.bootstrap.min.js"></script> -->
 
+<script>
+$(document).ready(function() {
 
-<!-- <form id="live-search-form" method="get" action="search_by_email_or_permalink">
-  <input id="big-search-box" name="q" type="text"/>
-
-</form> -->
-
-<div id="live-search-results"></div>
-
+  $("#form_search input").on('keydown', function (e) {
+    if ( e.which == 13 ) return false;
+  });
+    $("#form_search input").on('keyup', function (e) {
+      var wordFind = $("#search input").value;
+      $.get($("#form_search").attr("action"), $("#form_search").serialize(), null, "script");
+      // return false;
+    });
+    $("#form_dropdown select").on('change', function (e) {
+      $.get($("#form_dropdown").attr("action"), $("#form_dropdown").serialize(), null, "script");
+      return false;
+    });
+});
+</script>
 
 <div class="container">
 
@@ -43,12 +50,11 @@
                 <%= render 'user' %>
                 </div>
                 <div>
-                  <div class="text-center" id='paginacion'></div>
+                  <div class="text-center" id='paginacion'><%#= will_paginate @users, :params => { :action => 'list' }%></div>
                 </div>
     	</div>
     </div>
   </div>
 
 </div>
-<!-- <button id="refresh_table">refresh</button> -->
 <p><%= link_to "Add new User", {:action => 'new' }%></p>

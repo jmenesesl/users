@@ -11,10 +11,9 @@ Rails.application.routes.draw do
   get 'users/delete'
   get 'users/update'
   get 'users/search'
-  get 'users/index'
   get 'users/result'
   get 'users/search_by_email_or_permalink'
-  get 'users/list*' => 'users#list', format: true
+  # get 'users/list*' => 'users#list', format: true
   # post 'users/search_by_email_or_permalink*' => 'users#list', format: true
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

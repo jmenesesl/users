@@ -32,6 +32,4 @@
     <%end %>
   </tbody>
 </table>
-<div>
-  <div class="text-center"><%= will_paginate @users, :params => { :action => 'list' }, remote:true%></div>
-</div>
+<%== pagy_nav(@pagy).html_safe %>

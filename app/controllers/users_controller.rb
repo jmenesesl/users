@@ -1,40 +1,35 @@
 class UsersController < ApplicationController
-
 $pages = 5
 
 def index
-    @users = User.all
+    @pagy, @users = pagy(User.all, items: $pages)
 end
 
   def list
-  #   if params[:usertype] == 'All'
-  #     @users = User.all.paginate(:page => params[:page], :per_page => $pages)
-  #   end
-    if params[:usertype].nil?
-    @users = User.all.paginate(:page => params[:page], :per_page => $pages)
-  else
-    if params[:usertype] != 'All'
-      @users = User.where(["usertype LIKE ?", "%#{params[:usertype]}%"]).paginate(:page => params[:page], :per_page => $pages)
+      if params[:usertype].nil?
+        @pagy, @users = pagy(User.all, items: $pages)#.paginate(:page => params[:page], :per_page => $pages)
     else
-      @users = User.all.paginate(:page => params[:page], :per_page => $pages)
+      if params[:usertype] != 'All'
+        @pagy, @users = pagy(User.where(["usertype LIKE ?", "%#{params[:usertype]}%"]), items: $pages)#.paginate(:page => params[:page], :per_page => $pages)
+      else
+        @pagy, @users = pagy(User.all, items: $pages)
+      end
     end
-  end
-    # respond_to do |format|
-    #   format.html
-    #   format.json { render json: @users }
-    # end
    end
 
    def search
      if params[:usertype] != 'All'
-       @users = User.where(["usertype LIKE ?", "%#{params[:usertype]}%"]).paginate(:page => params[:page], :per_page => $pages)
+       @pagy, @users = pagy(User.where(["usertype LIKE ?", "%#{params[:usertype]}%"]), items: $pages)#.paginate(:page => params[:page], :per_page => $pages)
      else
-       @users = User.all.paginate(:page => params[:page], :per_page => $pages)
+       @pagy, @users = pagy(User.all, items: $pages)
      end
+    #  respond_to do |format|
+    #   format.html { redirect_to('users#list') }
+    #   end
    end
 
    def search_by_email_or_permalink
-    @users = User.where(["email LIKE ?", "%#{params[:term]}%"]).or(User.where(["id_permalink LIKE ?", "%#{params[:term]}%"])).paginate(:page => params[:page], :per_page => $pages)
+    @pagy, @users = pagy(User.where(["email LIKE ?", "%#{params[:term]}%"]).or(User.where(["id_permalink LIKE ?", "%#{params[:term]}%"])), items: $pages)#.paginate(:page => params[:page], :per_page => $pages)
     puts 'CALL TO search_by_email_or_permalink\n'
     # redirect_to :action => 'list'
     # render @users
