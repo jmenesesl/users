@@ -20,21 +20,18 @@
 //= require pagy
 window.addEventListener("turbolinks:load", Pagy.init);
 $(document).ready(function() {
-
-  // $("body").change(function (e) {
-  //   alert();
-  // });
-
-
   $("#form_search input").on('keydown', function (e) {
     if ( e.which == 13 ) return false;
   });
     $("#form_search input").on('keyup', function (e) {
       var wordFind = $("#search input").value;
+       var input = $("<input>").attr("type", "hidden").attr("name", "usertype").val($( "#select_usertype option:selected" ).text());
+      $("#form_search").append(input);
       $.get($("#form_search").attr("action"), $("#form_search").serialize(), null, "script");
       // return false;
     });
     $("#form_dropdown select").on('change', function (e) {
+      $("#buscador").val(null);
       $.get($("#form_dropdown").attr("action"), $("#form_dropdown").serialize(), null, "script");
       return false;
     });

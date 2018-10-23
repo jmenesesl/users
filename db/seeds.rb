@@ -8,13 +8,34 @@
 
 require 'faker'
 include Faker
-100.times do
+$link = "https://streamable.com/bfivc"
+10000.times do
   User.create(
     id_permalink: Faker::Number.number(5),
     email: Faker::Internet.email,
     usertype: 'Standard',
-    creations: Faker::Company.name,
+    creations: $link,
     credit_subscription: Faker::Number.number(3),
-    creation_date: Faker::Date
+    creation_date: Time.now
+  )
+end
+10000.times do
+  User.create(
+    id_permalink: Faker::Number.number(5),
+    email: Faker::Internet.email,
+    usertype: 'Pro',
+    creations: $link,
+    credit_subscription: Faker::Number.number(3),
+    creation_date: Time.now
+  )
+end
+10000.times do
+  User.create(
+    id_permalink: Faker::Number.number(5),
+    email: Faker::Internet.email,
+    usertype: 'Custom',
+    creations: $link,
+    credit_subscription: Faker::Number.number(3),
+    creation_date: Time.now
   )
 end
