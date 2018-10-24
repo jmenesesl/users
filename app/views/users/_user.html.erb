@@ -14,7 +14,7 @@
     <% @users.each do |users| %>
     <tr>
         <td><%= users.id %></td>
-        <td><%= users.email %></td>
+        <td><%= link_to users.email, {:action => 'userDetails', user_id: users }%></td>
         <td><%= users.usertype %></td>
         <td><%= content_tag(:iframe, '', src: users.creations, width: 560, height: 315, frameborder: 0, autoplay:'autoplay') %></td>
         <td><%= users.credit_subscription %></td>

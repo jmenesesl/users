@@ -7,7 +7,6 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       t.string :creations
       t.string :credit_subscription
       t.datetime :creation_date
-
       t.timestamps
     end
   end

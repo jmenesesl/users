@@ -70,3 +70,5 @@ gem "bootstrap-sass", "~> 3.3"
 gem "jquery-rails", "~> 4.3"
 
 gem "faker", "~> 1.9"
+
+gem "rest-client", "~> 2.0"

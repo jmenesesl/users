@@ -1,0 +1,125 @@
+<h1>User Details</h1>
+
+
+
+  <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+  <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+  <div class="container">
+  	<div class="row">
+  		<div class="col-sm-12">
+      									<div class="tabbable">
+  											<ul id="myTab4" class="nav nav-tabs padding-12 tab-color-blue background-blue">
+  												<li class="active">
+  													<a href="#home4" data-toggle="tab">Home</a>
+  												</li>
+  											</ul>
+
+  											<div class="tab-content">
+  												<div class="tab-pane active" id="home4">
+  													<div class="row">
+  <div class="col-sm-12">
+  <div id="accordion" class="accordion-style1 panel-group">
+  <div class="panel panel-default">
+  <div class="panel-heading">
+  <h4 class="panel-title">
+  <a class="accordion-toggle" href="#collapseOne" data-parent="#accordion" data-toggle="collapse">
+  <i class="icon-angle-down bigger-110" data-icon-show="icon-angle-right" data-icon-hide="icon-angle-down"></i>
+   Details
+  </a>
+  </h4>
+  </div>
+  <div id="collapseOne" class="panel-collapse collapse in">
+
+  <div class="panel-body"> <% @user.each do |c| %>
+    <table style="border-collapse: separate; border-spacing: 50px 0;">
+      <tr>
+        <th>
+          Email:
+        </th>
+        <td>
+          <%= c.email %>
+        </td>
+      </tr>
+      <tr>
+        <th>
+          Usertype:
+        </th>
+        <td>
+          <%= c.usertype %>
+        </td>
+      </tr>
+      <tr>
+        <th>
+          Credit / subscription:
+        </th>
+        <td>
+          <%= c.credit_subscription %>
+        </td>
+      </tr>
+      <tr>
+        <th>
+          Creation date:
+        </th>
+        <td>
+          <%= c.creation_date %>
+        </td>
+      </tr>
+      <tr>
+        <th>
+          Permalink:
+        </th>
+        <td>
+          <%= c.id_permalink %>
+        </td>
+      </tr>
+      <tr>
+        <th>
+          Creation:
+        </th>
+        <td>
+          <%= c.creations %>
+        </td>
+      </tr>
+    </table>
+
+
+
+  <%end%> </div>
+  </div>
+  </div>
+  <div class="panel panel-default">
+  <div class="panel-heading">
+  <h4 class="panel-title">
+  <a class="accordion-toggle collapsed" href="#collapseTwo" data-parent="#accordion" data-toggle="collapse">
+  <i class="icon-angle-right bigger-110" data-icon-show="icon-angle-right" data-icon-hide="icon-angle-down"></i>
+   Payment Details
+  </a>
+  </h4>
+  </div>
+  <div id="collapseTwo" class="panel-collapse collapse">
+  <div class="panel-body"> Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. </div>
+  </div>
+  </div>
+  <div class="panel panel-default">
+  <div class="panel-heading">
+  <h4 class="panel-title">
+  <a class="accordion-toggle collapsed" href="#collapseThree" data-parent="#accordion" data-toggle="collapse">
+  <i class="icon-angle-right bigger-110" data-icon-show="icon-angle-right" data-icon-hide="icon-angle-down"></i>
+   Tabla render
+  </a>
+  </h4>
+  </div>
+  <div id="collapseThree" class="panel-collapse collapse">
+  <div class="panel-body"><%= render 'video'%></div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  												</div>
+  											</div>
+  										</div>
+  									</div>
+  	</div>
+  </div>
