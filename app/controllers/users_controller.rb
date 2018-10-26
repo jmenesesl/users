@@ -116,9 +116,16 @@ end
     # $pagy_one = User.where(["email LIKE ?", "#{params[:term]}%"]).size
     @pagy, @users = pagy(User.where(["email LIKE ?", "#{params[:term]}%"]), items: $pages)
     @user = User.where(["id = ?", "#{params[:user_id]}"])
+
+    if params[:page].nil? # Determinamos si está paginando para modificar atributos del css
+      @paginate = false;
+    else
+      @paginate = true; # cerrar ventana details y abrir render
+    end
+
     respond_to do |format|
-      format.js
-      format.html { render 'relatedUsers2'}
+      format.js # Por defecto regresa un js (primer intento)
+      format.html { render 'userDetails'} # En caso de solicitar html renderiza la pagina
     end
     # render formats: :js
     # render locals: {users:@users}

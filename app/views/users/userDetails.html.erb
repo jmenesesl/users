@@ -1,30 +1,71 @@
 <% content_for :javascript_includes do %>
   <%= javascript_include_tag "user_details.js" %>
 <% end %>
+<%if @paginate%>
+  <script>
+  $(document).ready(function() {
 
-<script>
-$(document).ready(function() {
-  $("#render_table").click(function (e) {
-    var tmp =  $('#email').text();
-    tmp = tmp.split('@');
-    tmp = tmp[0].trim();
-    var id =  $('#id_user').val();
-    console.log(id);
-    var values = {
-            'term': tmp,
-            'user_id': id
-    };
-    console.log(values);
+    $("#render_table").click(function (e) {
+      var tmp =  $('#email').text();
+      tmp = tmp.split('@');
+      tmp = tmp[0].trim();
+      page = $("#page").val();
+      var id =  $('#id_user').val();
+      console.log(id);
+      var values = {
+              'term': tmp,
+              'user_id': id,
+              'page': page
+      };
+      console.log(values);
 
-    $.ajax({
-        url: "relatedUsers",
-        type: "GET",
-        data: values
+      $.ajax({
+          url: "relatedUsers",
+          type: "GET",
+          data: values
+      });
+      // $.get($("#form_search").attr("action"), $("#form_search").serialize(), null, "script");
     });
-    // $.get($("#form_search").attr("action"), $("#form_search").serialize(), null, "script");
+    $('#div_to_close').addClass('collapsed');
+    $('#collapseOne').removeClass('in');
+    $("#users").html("<%= escape_javascript(render("user")) %>");
+    $('#div_to_open').removeClass('collapsed');
+    $('#collapseThree').addClass('in');
+
+    // setTimeout(function(){ $("#div_to_open")[0].click(); }, 0);
+    // $('#collapseThree').addClass('in');
   });
-});
-</script>
+  </script>
+
+<%else%>
+
+  <script>
+  $(document).ready(function() {
+    $("#render_table").click(function (e) {
+      var tmp =  $('#email').text();
+      tmp = tmp.split('@');
+      tmp = tmp[0].trim();
+      page = $("#page").val();
+      var id =  $('#id_user').val();
+      console.log(id);
+      var values = {
+              'term': tmp,
+              'user_id': id,
+              'page': page
+      };
+      console.log(values);
+
+      $.ajax({
+          url: "relatedUsers",
+          type: "GET",
+          data: values
+      });
+      // $.get($("#form_search").attr("action"), $("#form_search").serialize(), null, "script");
+    });
+  });
+  </script>
+
+<%end%>
 
 
   <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -49,7 +90,7 @@ $(document).ready(function() {
   <div class="panel panel-default">
   <div class="panel-heading" >
     <h4 class="panel-title">
-    <a class="accordion-toggle" href="#collapseOne" data-parent="#accordion" data-toggle="collapse">
+    <a id= "div_to_close" class="accordion-toggle" href="#collapseOne" data-parent="#accordion" data-toggle="collapse">
     <i class="icon-angle-down bigger-110" data-icon-show="icon-angle-right" data-icon-hide="icon-angle-down"></i>
      Details
     </a>
@@ -199,7 +240,7 @@ $(document).ready(function() {
   <div class="panel panel-default">
   <div class="panel-heading" id="render_table">
   <h4 class="panel-title">
-  <a class="accordion-toggle collapsed" href="#collapseThree" data-parent="#accordion" data-toggle="collapse">
+  <a id="div_to_open" class="accordion-toggle collapsed" href="#collapseThree" data-parent="#accordion" data-toggle="collapse">
   <i class="icon-angle-right bigger-110" data-icon-show="icon-angle-right" data-icon-hide="icon-angle-down"></i>
    Render table
   </a>
@@ -226,3 +267,4 @@ $(document).ready(function() {
   									</div>
   	</div>
   </div>
+  <input type="hidden" id="page" name="page" value="<%= params[:page]%>">
