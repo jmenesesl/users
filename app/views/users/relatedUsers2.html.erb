@@ -62,7 +62,6 @@ $(document).ready(function() {
       <tr>
         <th>
           Email:
-          <input type="hidden" id="id_user" name="custId" value="<%=c.id%>">
         </th>
         <td id="email">
           <%= c.email %>
@@ -205,12 +204,7 @@ $(document).ready(function() {
   </h4>
   </div>
   <div id="collapseThree" class="panel-collapse collapse">
-  <div class="panel-body" id="users" style="overflow:auto">  <% if @users.blank? %>
-  puts 'no hay users'
-    <% else %>
-  puts 'hay users'
-  <%render 'user' %>
-    <%end%></div>
+  <div class="panel-body" id="users"><%= render 'video'%></div>
   </div>
   </div>
   </div>

@@ -18,6 +18,7 @@
 //= require jquery_ujs
 //= require bootstrap-sprockets
 //= require pagy
+//= require user_details.js
 window.addEventListener("turbolinks:load", Pagy.init);
 $(document).ready(function() {
   $("#form_search input").on('keydown', function (e) {

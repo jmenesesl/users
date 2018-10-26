@@ -28,7 +28,7 @@ def index
 
     response = RestClient::Request.execute(method: :get, url: 'http://0.0.0.0:3000/users/search_by_email_or_permalink',
                             timeout: 20, headers: {params: {page: 3, term: 'su', usertype: 'Pro'}})
-    puts response.body
+    puts response.body # Regresa la información html obtenida en el campo anterior
     # url = 'http://0.0.0.0:3000/users/new'
     # json = {"id_permalink"=>"abc123", "email"=>"", "usertype"=>"Pro", "creations"=>"crea1", "credit_subscription"=>"300", "creation_date"=>"13/02/1995"}
 
@@ -69,7 +69,11 @@ end
 
    def search
      if params[:usertype] != 'All'
-       @pagy, @users = pagy(User.where(["usertype LIKE ?", "%#{params[:usertype]}%"]), items: $pages)
+       if params[:term].nil?
+         @pagy, @users = pagy(User.where(["usertype LIKE ?", "%#{params[:usertype]}%"]), items: $pages)
+       else
+         @pagy, @users = pagy(User.where(["(email LIKE ? or id_permalink LIKE ?) and usertype LIKE ?", "%#{params[:term]}%","%#{params[:term]}%", "%#{params[:usertype]}%" ]), items: $pages)
+       end
      else
        @pagy, @users = pagy(User.all, items: $pages)
      end
@@ -80,11 +84,8 @@ end
 
    def search_by_email_or_permalink
      if params[:usertype] != 'All'
-       puts 'TIENE USERTYPE\n'
-       puts params[:usertype]
-       @pagy, @users = pagy(User.where(["email LIKE ? and usertype LIKE ?", "%#{params[:term]}%", "%#{params[:usertype]}%"]).or(User.where(["id_permalink LIKE ? and usertype LIKE ?", "%#{params[:term]}%", "%#{params[:usertype]}%"])), items: $pages)
+        @pagy, @users = pagy(User.where(["email LIKE ? and usertype LIKE ?", "%#{params[:term]}%", "%#{params[:usertype]}%"]).or(User.where(["id_permalink LIKE ? and usertype LIKE ?", "%#{params[:term]}%", "%#{params[:usertype]}%"])), items: $pages)
      else
-       puts 'NO TIENE USERTYPE\n'
        @pagy, @users = pagy(User.where(["email LIKE ?", "%#{params[:term]}%"]).or(User.where(["id_permalink LIKE ?", "%#{params[:term]}%"])), items: $pages)
      end
     end
@@ -95,10 +96,23 @@ end
 
 
   def userDetails
-    # puts params[:users]
     @user = User.where(["id = ?", "#{params[:user_id]}"])
-    puts @user.to_json
+  end
 
+  def relatedUsers
+    # $word = params[:term].split('@')
+    # $word = $word[0].strip
+    # @user = User.where(["id = ?", "#{params[:user_id]}"])
+    # puts $word
+    $pagy_one = User.where(["email LIKE ?", "#{params[:term]}%"]).size
+    @pagy, @users = pagy(User.where(["email LIKE ?", "#{params[:term]}%"]), items: $pagy_one)
+    @user = User.where(["id = ?", "#{params[:user_id]}"])
+    # respond_to do |format|
+    #   format.js
+    #   format.html { render 'userDetails'}
+    # end
+    # render formats: :js
+    # render locals: {users:@users}
   end
 
    def show
@@ -131,7 +145,6 @@ end
 
    def update
      @user = User.find(params[:id_permalink])
-
      if @user.update_attributes(user_params)
        redirect_to :action => 'show'
      else
