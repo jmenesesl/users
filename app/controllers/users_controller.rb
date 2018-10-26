@@ -77,6 +77,10 @@ end
      else
        @pagy, @users = pagy(User.all, items: $pages)
      end
+     respond_to do |format|
+       format.js
+       format.html { render 'list'}
+     end
 
    rescue Pagy::OutOfRangeError => e
      render 'new';
@@ -87,6 +91,11 @@ end
         @pagy, @users = pagy(User.where(["email LIKE ? and usertype LIKE ?", "%#{params[:term]}%", "%#{params[:usertype]}%"]).or(User.where(["id_permalink LIKE ? and usertype LIKE ?", "%#{params[:term]}%", "%#{params[:usertype]}%"])), items: $pages)
      else
        @pagy, @users = pagy(User.where(["email LIKE ?", "%#{params[:term]}%"]).or(User.where(["id_permalink LIKE ?", "%#{params[:term]}%"])), items: $pages)
+     end
+
+     respond_to do |format|
+       format.js
+       format.html { render 'list'}
      end
     end
 
@@ -104,13 +113,13 @@ end
     # $word = $word[0].strip
     # @user = User.where(["id = ?", "#{params[:user_id]}"])
     # puts $word
-    $pagy_one = User.where(["email LIKE ?", "#{params[:term]}%"]).size
-    @pagy, @users = pagy(User.where(["email LIKE ?", "#{params[:term]}%"]), items: $pagy_one)
+    # $pagy_one = User.where(["email LIKE ?", "#{params[:term]}%"]).size
+    @pagy, @users = pagy(User.where(["email LIKE ?", "#{params[:term]}%"]), items: $pages)
     @user = User.where(["id = ?", "#{params[:user_id]}"])
-    # respond_to do |format|
-    #   format.js
-    #   format.html { render 'userDetails'}
-    # end
+    respond_to do |format|
+      format.js
+      format.html { render 'relatedUsers2'}
+    end
     # render formats: :js
     # render locals: {users:@users}
   end

@@ -1,42 +1,18 @@
-<% content_for :javascript_includes do %>
-  <%= javascript_include_tag "user_details.js" %>
-<% end %>
-
-<script>
-$(document).ready(function() {
-  $("#render_table").click(function (e) {
-    var tmp =  $('#email').text();
-    tmp = tmp.split('@');
-    tmp = tmp[0].trim();
-    var id =  $('#id_user').val();
-    console.log(id);
-    var values = {
-            'term': tmp,
-            'user_id': id
-    };
-    console.log(values);
-
-    $.ajax({
-        url: "relatedUsers",
-        type: "GET",
-        data: values
-    });
-    // $.get($("#form_search").attr("action"), $("#form_search").serialize(), null, "script");
-  });
-});
-</script>
 
 
   <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
   <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
   <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
   <div class="container">
+    <!-- <div id="users"><%= render 'user'%></div> -->
+
+
   	<div class="row">
   		<div class="col-sm-12">
       									<div class="tabbable">
   											<ul id="myTab4" class="nav nav-tabs padding-12 tab-color-blue background-blue">
   												<li class="active">
-  													<a href="#home4" data-toggle="tab"><h3>User Details</h3></a>
+  													<a href="#home4" data-toggle="tab"><h3><% @user.each do |p|%><%= p.email %><%end%></h3></a>
   												</li>
   											</ul>
 
@@ -48,13 +24,13 @@ $(document).ready(function() {
   <div class="panel panel-default">
   <div class="panel-heading" >
     <h4 class="panel-title">
-    <a class="accordion-toggle" href="#collapseOne" data-parent="#accordion" data-toggle="collapse">
+    <a class="accordion-toggle collapsed" href="#collapseOne" data-parent="#accordion" data-toggle="collapse">
     <i class="icon-angle-down bigger-110" data-icon-show="icon-angle-right" data-icon-hide="icon-angle-down"></i>
      Details
     </a>
     </h4>
   </div>
-  <div id="collapseOne" class="panel-collapse collapse in">
+  <div id="collapseOne" class="panel-collapse collapse">
 
   <div class="panel-body">
      <% @user.each do |c| %>
@@ -197,14 +173,14 @@ $(document).ready(function() {
   <div class="panel panel-default">
   <div class="panel-heading" id="render_table">
   <h4 class="panel-title">
-  <a class="accordion-toggle collapsed" href="#collapseThree" data-parent="#accordion" data-toggle="collapse">
+  <a class="accordion-toggle" href="#collapseThree" data-parent="#accordion" data-toggle="collapse" aria-expanded="true">
   <i class="icon-angle-right bigger-110" data-icon-show="icon-angle-right" data-icon-hide="icon-angle-down"></i>
    Render table
   </a>
   </h4>
   </div>
-  <div id="collapseThree" class="panel-collapse collapse">
-  <div class="panel-body" id="users"><%= render 'video'%></div>
+  <div id="collapseThree" class="panel-collapse collapse in" aria-expanded="true">
+  <div class="panel-body" style="padding:0;"><div style="position:absolute; height:100%; width:100%;"><%= render 'user'%></div></div>
   </div>
   </div>
   </div>

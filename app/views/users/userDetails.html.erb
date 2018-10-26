@@ -36,7 +36,8 @@ $(document).ready(function() {
       									<div class="tabbable">
   											<ul id="myTab4" class="nav nav-tabs padding-12 tab-color-blue background-blue">
   												<li class="active">
-  													<a href="#home4" data-toggle="tab"><h3>User Details</h3></a>
+  													<a href="#home4" data-toggle="tab"><h3><% @user.each do |p|%><%= p.email %><%end%>
+                        </h3></a>
   												</li>
   											</ul>
 
@@ -205,12 +206,15 @@ $(document).ready(function() {
   </h4>
   </div>
   <div id="collapseThree" class="panel-collapse collapse">
-  <div class="panel-body" id="users" style="overflow:auto">  <% if @users.blank? %>
-  puts 'no hay users'
-    <% else %>
-  puts 'hay users'
-  <%render 'user' %>
-    <%end%></div>
+  <div class="panel-body" id="users" style="padding:0; overflow:auto">
+    <div> <% if @users.blank?%>
+          puts 'no hay users'
+        <% else %>
+          puts 'hay users'
+          <%render 'user' %>
+        <%end%>
+      </div>
+    </div>
   </div>
   </div>
   </div>
