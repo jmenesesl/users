@@ -1,6 +1,7 @@
 <% content_for :javascript_includes do %>
   <%= javascript_include_tag "user_details.js" %>
 <% end %>
+
 <%if @paginate%>
   <script>
   $(document).ready(function() {
@@ -24,16 +25,13 @@
           type: "GET",
           data: values
       });
-      // $.get($("#form_search").attr("action"), $("#form_search").serialize(), null, "script");
     });
+
     $('#div_to_close').addClass('collapsed');
     $('#collapseOne').removeClass('in');
     $("#users").html("<%= escape_javascript(render("user")) %>");
     $('#div_to_open').removeClass('collapsed');
     $('#collapseThree').addClass('in');
-
-    // setTimeout(function(){ $("#div_to_open")[0].click(); }, 0);
-    // $('#collapseThree').addClass('in');
   });
   </script>
 
@@ -60,14 +58,10 @@
           type: "GET",
           data: values
       });
-      // $.get($("#form_search").attr("action"), $("#form_search").serialize(), null, "script");
     });
   });
   </script>
-
 <%end%>
-
-
   <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
   <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
   <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
@@ -248,10 +242,10 @@
   </div>
   <div id="collapseThree" class="panel-collapse collapse">
   <div class="panel-body" id="users" style="padding:0; overflow:auto">
-    <div> <% if @users.blank?%>
-          puts 'no hay users'
+    <div class="table-responsive" style="overflow: hidden;"> <% if @users.blank?%>
+          no hay users
         <% else %>
-          puts 'hay users'
+          hay users
           <%render 'user' %>
         <%end%>
       </div>

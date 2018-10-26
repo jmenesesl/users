@@ -10,3 +10,23 @@
   line-height: 1.428571429;
   border-radius: 15px;
 }
+@media screen and (max-width: 800px) {
+  #tabla_users {
+    border: none;
+            clip: rect(0, 0, 0, 0);
+            height: 1px;
+            margin: -1px;
+            overflow: hidden;
+            padding: 0;
+            position: absolute;
+            width: 1px;
+  }
+}
+
+#tabla_users {
+  position:relative;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}

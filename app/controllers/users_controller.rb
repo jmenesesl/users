@@ -82,8 +82,8 @@ end
        format.html { render 'list'}
      end
 
-   rescue Pagy::OutOfRangeError => e
-     render 'new';
+     rescue Pagy::OutOfRangeError => e
+       render 'new';
    end
 
    def search_by_email_or_permalink
@@ -97,42 +97,30 @@ end
        format.js
        format.html { render 'list'}
      end
-    end
-
-  #  def search_by_email_or_permalink
-  #   @pagy, @users = pagy(User.where(["email LIKE ?", "%#{params[:term]}%"]).or(User.where(["id_permalink LIKE ?", "%#{params[:term]}%"])), items: $pages)
-  #  end
-
+   end
 
   def userDetails
     @user = User.where(["id = ?", "#{params[:user_id]}"])
   end
 
   def relatedUsers
-    # $word = params[:term].split('@')
-    # $word = $word[0].strip
-    # @user = User.where(["id = ?", "#{params[:user_id]}"])
-    # puts $word
-    # $pagy_one = User.where(["email LIKE ?", "#{params[:term]}%"]).size
     @pagy, @users = pagy(User.where(["email LIKE ?", "#{params[:term]}%"]), items: $pages)
     @user = User.where(["id = ?", "#{params[:user_id]}"])
 
     if params[:page].nil? # Determinamos si está paginando para modificar atributos del css
       @paginate = false;
     else
-      @paginate = true; # cerrar ventana details y abrir render
+      @paginate = true; # Cerrar ventana details y abrir render
     end
 
     respond_to do |format|
       format.js # Por defecto regresa un js (primer intento)
       format.html { render 'userDetails'} # En caso de solicitar html renderiza la pagina
     end
-    # render formats: :js
-    # render locals: {users:@users}
   end
 
    def show
-     @user = User.find(params[:id_permalink])# :email])
+     @user = User.find(params[:id_permalink])
      respond_with @user
    end
 
