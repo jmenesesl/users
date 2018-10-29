@@ -16,6 +16,6 @@ $(document).ready(function() {
         type: "GET",
         data: values
     });
-    // $.get($("#form_search").attr("action"), $("#form_search").serialize(), null, "script");
+    // e.preventDefault();
   });
 });

@@ -28,7 +28,6 @@ $(document).ready(function() {
     <div class="d-flex">
       <div class="col-sm-4">
         <%= form_tag({:action => "search"}, :method => "get", id: "form_dropdown") do%>
-          <%#= label_tag(:usertype, "usertype:") %>
           <%= select_tag :usertype, options_for_select(['All','Standard', 'Pro', 'Custom'], :selected => params[:usertype]), id:"select_usertype", :class => "form-control"  %>
         <% end %>
       </div>

@@ -14,12 +14,17 @@
     <% @users.each do |users| %>
     <tr>
         <td><%= users.id %></td>
-        <td><%= link_to users.email, {:action => 'userDetails', user_id: users }%></td>
+        <td style="max-width:10%"><%= link_to users.email, {:action => 'userDetails', user_id: users }%></td>
         <td><%= users.usertype %></td>
         <td><%= content_tag(:iframe, '', src: users.creations, width: '100%', height: '180%', frameborder: 0, autoplay:'autoplay') %></td>
         <td><%= users.credit_subscription %></td>
-        <td><%= users.creation_date %></td>
-        <td><button type="button" class="btn btn-default btn-circle"><i class="glyphicon glyphicon-calendar"></i></button><button type="button" class="btn btn-default btn-circle"><i class="glyphicon glyphicon-piggy-bank"></i></button><button type="button" class="btn btn-default btn-circle"><i class="glyphicon glyphicon-user"></i></button><button type="button" class="btn btn-default btn-circle">  <i class="glyphicon glyphicon-ban-circle"></i></button></td>
+        <td><%= users.creation_date.to_date %></td>
+        <td id="icons_menu">
+          <i class="glyphicon glyphicon-calendar"></i>
+          <i class="glyphicon glyphicon-piggy-bank"></i>
+          <i class="glyphicon glyphicon-user"></i>
+          <i class="glyphicon glyphicon-ban-circle"></i>
+        </td>
     </tr>
     <%#= puts "Usuarios" %>
     <%#= puts users.id_permalink %>

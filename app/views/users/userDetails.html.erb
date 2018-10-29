@@ -242,11 +242,14 @@
   </div>
   <div id="collapseThree" class="panel-collapse collapse">
   <div class="panel-body" id="users" style="padding:0; overflow:auto">
-    <div class="table-responsive" style="overflow: hidden;"> <% if @users.blank?%>
+    <div class="table-responsive"style="overflow: hidden;"> <% if @users.blank?%>
           no hay users
+
         <% else %>
-          hay users
           <%render 'user' %>
+          <%#= puts @users.to_json%>
+          <%# if @users.size == 1 && @users[0] == @user%>
+          <!-- no hay users relacionats -->
         <%end%>
       </div>
     </div>
