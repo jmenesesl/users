@@ -3,59 +3,8 @@ $pages = 4
 require 'rest_client'
 require 'json'
 
-def index
-    # @pagy, @users = pagy(User.all, items: $pages)
-    # @max_retries = 3
-    # begin
-    #   response = RestClient.get('http://www.google.com/noexiste', timeout: 10)
-    # rescue RestClient::ResourceNotFound => error
-    #   @retries ||= 0
-    #   if @retries < @max_retries
-    #     @retries += 1
-    #     puts "WAITING RESPONSE"
-    #     puts 'RETRY'
-    #     # puts response.code
-    #     retry
-    #   else
-    #
-    #     puts "FINALIZADO"
-    #     redirect_to users_list_path
-    #     # raise error
-    #   end
-    # ensure
-    #   # ESTA PARTE SIEMPRE SE EJECUTA
-    # end
-
-    response = RestClient::Request.execute(method: :get, url: 'http://0.0.0.0:3000/users/search_by_email_or_permalink',
-                            timeout: 20, headers: {params: {page: 3, term: 'su', usertype: 'Pro'}})
-    puts response.body # Regresa la información html obtenida en el campo anterior
-    # url = 'http://0.0.0.0:3000/users/new'
-    # json = {"id_permalink"=>"abc123", "email"=>"", "usertype"=>"Pro", "creations"=>"crea1", "credit_subscription"=>"300", "creation_date"=>"13/02/1995"}
-
-
-    # RestClient::Request.execute(method: :post,
-    #                         url: url,
-    #                         payload: ' {"id_permalink"=>"abc123", "email"=>"", "usertype"=>"Pro", "creations"=>"crea1", "credit_subscription"=>"300", "creation_date"=>"13/02/1995"}',
-    #                         headers: {"Content-Type" => "application/json"}
-    #                        )
-    #                        puts "waiting response"
-    #                         if response.code != 201
-    #                           puts 'ERROR EN AÑADIR USER'
-    #                                 session[:notification] = "Error: "+t('error_saving_exception').to_s
-    #                           return
-    #                         end
-    #
-    # response = RestClient.post(url, json)
-    #                              puts "waiting response"
-    #                               if response.code != 201
-    #                                 puts 'ERROR EN AÑADIR USER'
-    #                                       session[:notification] = "Error: "+t('error_saving_exception').to_s
-    #                                 return
-    #                               end
-  # render json: {status: 'SUCCESS', message: 'Users loaded', data: User.last(1)}, status: :ok #regresa como respuesta un objeto json
-end
-
   def list
+    # Parametro usertype se especifica en el select_tag del view
       if params[:usertype].nil?
         @pagy, @users = pagy(User.all, items: $pages)
     else
@@ -69,6 +18,7 @@ end
 
    def search
      if params[:usertype] != 'All'
+       # En caso de que el se especifique usertype pero no especifique texto de busqueda
        if params[:term].nil?
          @pagy, @users = pagy(User.where(["usertype LIKE ?", "%#{params[:usertype]}%"]), items: $pages)
        else
@@ -87,6 +37,7 @@ end
    end
 
    def search_by_email_or_permalink
+     # En caso de que se especifique usertype hace un filtrado doble: usertype and word
      if params[:usertype] != 'All'
         @pagy, @users = pagy(User.where(["email LIKE ? and usertype LIKE ?", "%#{params[:term]}%", "%#{params[:usertype]}%"]).or(User.where(["id_permalink LIKE ? and usertype LIKE ?", "%#{params[:term]}%", "%#{params[:usertype]}%"])), items: $pages)
      else
@@ -100,6 +51,7 @@ end
    end
 
   def userDetails
+    # Este metodo recibe el parametro identificador del usuario, para enseñar la informacion relativa
     @user = User.where(["id = ?", "#{params[:user_id]}"])
   end
 
@@ -161,8 +113,55 @@ end
      redirect_to :action => 'list'
    end
 
-   private
-   def remote_request
+  def index
+      # @pagy, @users = pagy(User.all, items: $pages)
+      # @max_retries = 3
+      # begin
+      #   response = RestClient.get('http://www.google.com/noexiste', timeout: 10)
+      # rescue RestClient::ResourceNotFound => error
+      #   @retries ||= 0
+      #   if @retries < @max_retries
+      #     @retries += 1
+      #     puts "WAITING RESPONSE"
+      #     puts 'RETRY'
+      #     # puts response.code
+      #     retry
+      #   else
+      #
+      #     puts "FINALIZADO"
+      #     redirect_to users_list_path
+      #     # raise error
+      #   end
+      # ensure
+      #   # ESTA PARTE SIEMPRE SE EJECUTA
+      # end
 
-   end
+      response = RestClient::Request.execute(method: :get, url: 'http://0.0.0.0:3000/users/search_by_email_or_permalink',
+                              timeout: 20, headers: {params: {page: 3, term: 'su', usertype: 'Pro'}})
+      puts response.body # Regresa la información html obtenida en el campo anterior
+      # url = 'http://0.0.0.0:3000/users/new'
+      # json = {"id_permalink"=>"abc123", "email"=>"", "usertype"=>"Pro", "creations"=>"crea1", "credit_subscription"=>"300", "creation_date"=>"13/02/1995"}
+
+
+      # RestClient::Request.execute(method: :post,
+      #                         url: url,
+      #                         payload: ' {"id_permalink"=>"abc123", "email"=>"", "usertype"=>"Pro", "creations"=>"crea1", "credit_subscription"=>"300", "creation_date"=>"13/02/1995"}',
+      #                         headers: {"Content-Type" => "application/json"}
+      #                        )
+      #                        puts "waiting response"
+      #                         if response.code != 201
+      #                           puts 'ERROR EN AÑADIR USER'
+      #                                 session[:notification] = "Error: "+t('error_saving_exception').to_s
+      #                           return
+      #                         end
+      #
+      # response = RestClient.post(url, json)
+      #                              puts "waiting response"
+      #                               if response.code != 201
+      #                                 puts 'ERROR EN AÑADIR USER'
+      #                                       session[:notification] = "Error: "+t('error_saving_exception').to_s
+      #                                 return
+      #                               end
+    # render json: {status: 'SUCCESS', message: 'Users loaded', data: User.last(1)}, status: :ok #regresa como respuesta un objeto json
+  end
 end
